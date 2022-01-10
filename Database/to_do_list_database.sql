@@ -1,4 +1,5 @@
 create database to_do_lists;
+create database to_do_lists_test;
 
 use to_do_lists;
 

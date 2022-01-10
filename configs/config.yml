@@ -5,4 +5,4 @@ database:
   port: 3306
   username: "todosadmin"
   password: "todos123"
-  name: "ProjectToDoList_Test"
+  name: "to_do_lists_test"

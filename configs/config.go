@@ -22,26 +22,31 @@ type AppConfig struct {
 var lock = &sync.Mutex{}
 var appConfig *AppConfig
 
-func GetConfig() *AppConfig {
+func GetConfig(env string) *AppConfig {
 	lock.Lock()
 	defer lock.Unlock()
 
 	if appConfig == nil {
-		appConfig = initConfig()
+		appConfig = initConfig(env)
 	}
 
 	return appConfig
 }
 
-func initConfig() *AppConfig {
+func initConfig(env string) *AppConfig {
 	var defaultConfig AppConfig
 	defaultConfig.Port = 8000
 	defaultConfig.Database.Driver = "mysql"
-	defaultConfig.Database.Name = "ProjectToDoList"
 	defaultConfig.Database.Address = "localhost"
 	defaultConfig.Database.Port = 3306
 	defaultConfig.Database.Username = "todosadmin"
 	defaultConfig.Database.Password = "todos123"
+
+	if env == "test" {
+		defaultConfig.Database.Name = "to_do_lists_test"
+	} else {
+		defaultConfig.Database.Name = "to_do_lists"
+	}
 
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")

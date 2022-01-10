@@ -14,7 +14,7 @@ import (
 
 func main() {
 	fmt.Println("Hello Todos")
-	config := configs.GetConfig()
+	config := configs.GetConfig("")
 	db := utils.InitDB(config)
 
 	e := echo.New()

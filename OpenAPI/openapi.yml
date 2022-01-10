@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Todos
+  contact:
+    name: Todos
+    url: https://github.com/herlianto-github/Todos
+servers:
+  - description: Server Todos
+    url: https://localhost:8000
+paths:
+  /users/register:
+    post:
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersSchema'
+      responses:
+        '200':
+          $ref: '#/components/responses/Response200'
+        '400':
+          $ref: '#/components/responses/Response400'
+  /users/login:
+    post:
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: AndrewPrasetyo
+                password:
+                  type: string
+                  example: Andrew123
+      responses:
+        '200':
+          $ref: '#/components/responses/Response200'
+        '400':
+          $ref: '#/components/responses/Response400'
+        '404':
+          $ref: '#/components/responses/Response404'
+  /users:
+    get:
+      tags:
+        - Users
+      responses:
+        '200':
+          $ref: '#/components/responses/Response200'
+        '404':
+          $ref: '#/components/responses/Response404'
+  
+components:
+  responses:
+    Response200:
+      description: success create
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                example: 200
+              message:
+                type: string
+                example: Successful Operation
+    Response400:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                example: 400
+              message:
+                type: string
+                example: Bad Request
+    Response404:
+      description: Not Fount
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                example: 404
+              message:
+                type: string
+                example: Not Found
+  schemas:
+    UsersSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: AndrewPrasetyo
+        password:
+          type: string
+          example: Andrew123
+   

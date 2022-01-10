@@ -16,13 +16,7 @@ func New(db *gorm.DB) *AuthRepository {
 
 func (a *AuthRepository) LoginUser(name, password string) (entities.User, error) {
 	var user entities.User
-	var err error
-	if err = a.db.Where("name = ? AND password = ?", name, password).First(&user).Error; err != nil {
-		return user, err
-	}
-
-	if err := a.db.Save(&user).Error; err != nil {
-		return user, err
-	}
+	a.db.Where("name = ? AND password = ?", name, password).First(&user)
+	a.db.Save(&user)
 	return user, nil
 }

@@ -2,6 +2,6 @@ package auth
 
 import "todos/entities"
 
-type Auth interface {
+type AuthInterface interface {
 	LoginUser(name, password string) (entities.User, error)
 }

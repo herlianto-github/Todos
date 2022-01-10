@@ -10,7 +10,7 @@ type AuthRepository struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) *AuthRepository {
+func NewAuth(db *gorm.DB) *AuthRepository {
 	return &AuthRepository{db: db}
 }
 

@@ -7,5 +7,5 @@ type UsersInterface interface {
 	Get(userId int) (entities.User, error)
 	Create(user entities.User) (entities.User, error)
 	Delete(userId int) (entities.User, error)
-	Update(nweUser entities.User, userId int) (entities.User, error)
+	Update(newUser entities.User, userId int) (entities.User, error)
 }

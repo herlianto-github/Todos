@@ -11,7 +11,9 @@ The code implementation was inspired by [Layered Architecture](https://www.oreil
 - **Repository**<br/>Contain implementation entities database anq query with ORM.
 - **Utils**<br/>Contain database driver (mySQL)
 
-
+# Setup Database
+1. Read Documentation [link](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql)
+2. Create User Database in folder 'configs'
 
 # How To Run Apps
 1. Create Database Based on Configs

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"todos/entities"
 
 	"gorm.io/gorm"
@@ -14,8 +15,12 @@ func NewAuthRepo(db *gorm.DB) *AuthRepository {
 	return &AuthRepository{db: db}
 }
 
-func (a *AuthRepository) LoginUser(name, password string) (entities.User, error) {
+func (ar *AuthRepository) LoginUser(name, password string) (entities.User, error) {
 	var user entities.User
-	a.db.Where("name = ? AND password = ?", name, password).First(&user)
+	getPass := entities.User{}
+	ar.db.Select("password").Where("Name = ?", name).Find(&getPass)
+	bcrypt.CompareHashAndPassword([]byte(getPass.Password), []byte(password))
+	ar.db.Where("Name = ?", name).Find(&user)
+
 	return user, nil
 }

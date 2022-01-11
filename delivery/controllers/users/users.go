@@ -1,6 +1,7 @@
 package users
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"todos/delivery/common"
 	"todos/entities"
@@ -26,9 +27,10 @@ func (uscon UsersController) PostUserCtrl() echo.HandlerFunc {
 		if err := c.Bind(&newUserReq); err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
+		hash, _ := bcrypt.GenerateFromPassword([]byte(newUserReq.Password), 14)
 		newUser := entities.User{
 			Name:     newUserReq.Name,
-			Password: newUserReq.Password,
+			Password: string(hash),
 		}
 
 		_, err := uscon.Repo.Create(newUser)
@@ -51,9 +53,11 @@ func (uscon UsersController) GetUsersCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
 
-		return c.JSON(http.StatusOK, map[string]interface{}{
-			"message": "success",
-			"data":    users,
-		})
+		return c.JSON(
+			http.StatusOK, map[string]interface{}{
+				"message": "success",
+				"data":    users,
+			},
+		)
 	}
 }

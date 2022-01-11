@@ -2,7 +2,7 @@ package entities
 
 import "gorm.io/gorm"
 
-type To_Do struct {
+type ToDo struct {
 	gorm.Model
 	//TODO_ID AUTO GENERATE
 	ProjectID   uint

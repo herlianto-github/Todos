@@ -7,5 +7,5 @@ type User struct {
 	//USERID AUTO GENERATE
 	Name     string
 	Password string
-	Todo     []To_Do
+	Todo     []ToDo
 }

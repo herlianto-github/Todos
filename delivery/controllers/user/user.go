@@ -1,10 +1,10 @@
-package users
+package user
 
 import (
 	"net/http"
 	"todos/delivery/common"
 	"todos/entities"
-	"todos/repository/users"
+	"todos/repository/user"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -12,14 +12,14 @@ import (
 )
 
 type UsersController struct {
-	Repo users.UsersInterface
+	Repo user.UserInterface
 }
 
-func NewUsersControllers(usrep users.UsersInterface) *UsersController {
+func NewUsersControllers(usrep user.UserInterface) *UsersController {
 	return &UsersController{Repo: usrep}
 }
 
-// POST /users/register
+// POST /user/register
 func (uscon UsersController) PostUserCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
@@ -28,6 +28,7 @@ func (uscon UsersController) PostUserCtrl() echo.HandlerFunc {
 		if err := c.Bind(&newUserReq); err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
+
 		hash, _ := bcrypt.GenerateFromPassword([]byte(newUserReq.Password), 14)
 		newUser := entities.User{
 			Name:     newUserReq.Name,
@@ -44,21 +45,21 @@ func (uscon UsersController) PostUserCtrl() echo.HandlerFunc {
 
 }
 
-// GET /users
+// GET /user
 func (uscon UsersController) GetUsersCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		users, err := uscon.Repo.GetAll()
+		user, err := uscon.Repo.GetAll()
 
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
 
-		return c.JSON(
-			http.StatusOK, map[string]interface{}{
-				"message": "success",
-				"data":    users,
-			},
-		)
+		response := GetUsersResponseFormat{
+			Message: "Successful Opration",
+			Data:    user,
+		}
+
+		return c.JSON(http.StatusOK, response)
 	}
 }

@@ -14,33 +14,33 @@ func NewProjectRepo(db *gorm.DB) *ProjectRepository {
 	return &ProjectRepository{db: db}
 }
 
-func (prr *ProjectRepository) GetAll() ([]entities.Project, error) {
+func (prrep *ProjectRepository) GetAll() ([]entities.Project, error) {
 	project := []entities.Project{}
-	prr.db.Find(&project)
+	prrep.db.Find(&project)
 	return project, nil
 }
 
-func (prr *ProjectRepository) Get(projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Get(projectId int) (entities.Project, error) {
 	project := entities.Project{}
-	prr.db.Find(&project, projectId)
+	prrep.db.Find(&project, projectId)
 	return project, nil
 }
 
-func (prr *ProjectRepository) Create(project entities.Project) (entities.Project, error) {
-	prr.db.Save(&project)
+func (prrep *ProjectRepository) Create(project entities.Project) (entities.Project, error) {
+	prrep.db.Save(&project)
 	return project, nil
 }
 
-func (prr *ProjectRepository) Delete(projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Delete(projectId int) (entities.Project, error) {
 	project := entities.Project{}
-	prr.db.Find(&project, "id=?", projectId)
-	prr.db.Delete(&project)
+	prrep.db.Find(&project, "id=?", projectId)
+	prrep.db.Delete(&project)
 	return project, nil
 }
 
-func (prr *ProjectRepository) Update(newProject entities.Project, projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Update(newProject entities.Project, projectId int) (entities.Project, error) {
 	project := entities.Project{}
-	prr.db.Find(&project, "id=?", projectId)
-	prr.db.Model(&project).Updates(newProject)
+	prrep.db.Find(&project, "id=?", projectId)
+	prrep.db.Model(&project).Updates(newProject)
 	return newProject, nil
 }

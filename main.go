@@ -5,10 +5,14 @@ import (
 	"log"
 	"todos/configs"
 	"todos/delivery/controllers/auth"
-	"todos/delivery/controllers/users"
+	"todos/delivery/controllers/project"
+	"todos/delivery/controllers/todo"
+	"todos/delivery/controllers/user"
 	"todos/delivery/routes"
 	authRepo "todos/repository/auth"
-	userRepo "todos/repository/users"
+	projRepo "todos/repository/project"
+	todoRepo "todos/repository/todo"
+	userRepo "todos/repository/user"
 	"todos/utils"
 
 	"github.com/labstack/echo/v4"
@@ -25,9 +29,15 @@ func main() {
 	authCtrl := auth.NewAuthControllers(authRepo)
 
 	userRepo := userRepo.NewUsersRepo(db)
-	userCtrl := users.NewUsersControllers(userRepo)
+	userCtrl := user.NewUsersControllers(userRepo)
 
-	routes.RegisterPath(e, authCtrl, userCtrl)
+	projRepo := projRepo.NewProjectRepo(db)
+	projCtrl := project.NewProjectsControllers(projRepo)
+
+	todoRepo := todoRepo.NewToDoRepo(db)
+	todoCtrl := todo.NewTodosControllers(todoRepo)
+
+	routes.RegisterPath(e, authCtrl, userCtrl, projCtrl, todoCtrl)
 
 	address := fmt.Sprintf("localhost:%d", config.Port)
 	log.Fatal(e.Start(address))

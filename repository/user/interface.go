@@ -1,8 +1,8 @@
-package users
+package user
 
 import "todos/entities"
 
-type UsersInterface interface {
+type UserInterface interface {
 	GetAll() ([]entities.User, error)
 	Get(userId int) (entities.User, error)
 	Create(user entities.User) (entities.User, error)

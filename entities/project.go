@@ -6,5 +6,5 @@ type Project struct {
 	gorm.Model
 	//PROJECTID AUTO GENERATE
 	ProjectName string
-	Todo        []To_Do
+	Todo        []ToDo
 }

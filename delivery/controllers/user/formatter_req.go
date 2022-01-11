@@ -1,4 +1,4 @@
-package users
+package user
 
 type RegisterUserRequestFormat struct {
 	Name     string `json:"name" form:"name"`

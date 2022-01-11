@@ -1,11 +1,12 @@
 package users
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"todos/delivery/common"
 	"todos/entities"
 	"todos/repository/users"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/labstack/echo/v4"
 )

@@ -27,17 +27,21 @@ func (prcon ProjectsController) PostToDoCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		newProject := entities.Project{
-			ProjectName: newProjectReq.ProjectName,
-			Todo:        newProjectReq.Todo,
+		if newProjectReq.ProjectName != "" && len(newProjectReq.Todo) != 0 {
+			newProject := entities.Project{
+				ProjectName: newProjectReq.ProjectName,
+				Todo:        newProjectReq.Todo,
+			}
+
+			_, err := prcon.Repo.Create(newProject)
+			if err != nil {
+				return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+			}
+
+			return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
 		}
 
-		_, err := prcon.Repo.Create(newProject)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
-		}
-
-		return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
+		return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 	}
 
 }

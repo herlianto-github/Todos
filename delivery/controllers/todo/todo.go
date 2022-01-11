@@ -27,20 +27,23 @@ func (tdcon TodosController) PostToDoCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		newToDo := entities.ToDo{
-			ProjectID:   newToDoReq.ProjectID,
-			UserID:      newToDoReq.UserID,
-			Task:        newToDoReq.Task,
-			Status:      newToDoReq.Status,
-			Description: newToDoReq.Description,
-		}
+		if newToDoReq.Task != "" {
+			newToDo := entities.ToDo{
+				ProjectID:   newToDoReq.ProjectID,
+				UserID:      newToDoReq.UserID,
+				Task:        newToDoReq.Task,
+				Status:      "OPEN",
+				Description: newToDoReq.Description,
+			}
 
-		_, err := tdcon.Repo.Create(newToDo)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
-		}
+			_, err := tdcon.Repo.Create(newToDo)
+			if err != nil {
+				return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+			}
 
-		return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
+			return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
+		}
+		return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 	}
 
 }

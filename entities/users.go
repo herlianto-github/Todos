@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type User struct {
 	gorm.Model
 	//USERID AUTO GENERATE
-	Name     string `json:"name" form:"name"`
-	Password string `json:"password" form:"password"`
+	Name     string
+	Password string
 	Todo     []To_Do
 }

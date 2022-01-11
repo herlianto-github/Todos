@@ -26,22 +26,24 @@ func (authcon AuthController) LoginAuthCtrl() echo.HandlerFunc {
 		if err := c.Bind(&loginFormat); err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
-		checkedUser, err := authcon.Repo.LoginUser(loginFormat.Email, loginFormat.Password)
+		checkedUser, err := authcon.Repo.LoginUser(loginFormat.Name, loginFormat.Password)
 
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
 
 		if err != nil || checkedUser.ID != 0 {
-			if loginFormat.Email != "" && loginFormat.Password != "" {
+			if loginFormat.Name != "" && loginFormat.Password != "" {
 				token, err := CreateTokenAuth(checkedUser.ID)
 				if err != nil {
 					return c.JSON(http.StatusNotAcceptable, common.NewStatusNotAcceptable())
 				}
-				return c.JSON(http.StatusOK, map[string]interface{}{
-					"message": "Successful Operation",
-					"token":   token,
-				})
+				return c.JSON(
+					http.StatusOK, map[string]interface{}{
+						"message": "Successful Operation",
+						"token":   token,
+					},
+				)
 			}
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		} else {

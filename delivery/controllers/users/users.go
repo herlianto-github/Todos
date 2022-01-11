@@ -3,6 +3,7 @@ package users
 import (
 	"net/http"
 	"todos/delivery/common"
+	"todos/entities"
 	"todos/repository/users"
 
 	"github.com/labstack/echo/v4"
@@ -16,11 +17,35 @@ func NewUsersControllers(usrep users.UsersInterface) *UsersController {
 	return &UsersController{Repo: usrep}
 }
 
-// /users GET
+// POST /users/register
+func (uscon UsersController) PostUserCtrl() echo.HandlerFunc {
+
+	return func(c echo.Context) error {
+		newUserReq := RegisterUserRequestFormat{}
+
+		if err := c.Bind(&newUserReq); err != nil {
+			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
+		}
+		newUser := entities.User{
+			Name:     newUserReq.Name,
+			Password: newUserReq.Password,
+		}
+
+		_, err := uscon.Repo.Create(newUser)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+		}
+
+		return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
+	}
+
+}
+
+// GET /users
 func (uscon UsersController) GetUsersCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		users, err := uscon.Repo.Gets()
+		users, err := uscon.Repo.GetAll()
 
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())

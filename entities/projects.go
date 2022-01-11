@@ -2,9 +2,9 @@ package entities
 
 import "gorm.io/gorm"
 
-type Projects struct {
+type Project struct {
 	gorm.Model
 	//PROJECTID AUTO GENERATE
-	UserID      uint   `json:"userid" form:"userid"`
 	ProjectName string `json:"projectname" form:"projectname"`
+	Todo        []To_Do
 }

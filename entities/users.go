@@ -7,4 +7,5 @@ type User struct {
 	//USERID AUTO GENERATE
 	Name     string `json:"name" form:"name"`
 	Password string `json:"password" form:"password"`
+	Todo     []To_Do
 }

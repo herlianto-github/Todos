@@ -29,8 +29,6 @@ func RegisterPath(
 	// ---------------------------------------------------------------------
 	// CRUD Projects
 	// ---------------------------------------------------------------------
-	e.POST("/projects/register", pctrl.PostToDoCtrl())
-	e.GET("/projects", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 	// ---------------------------------------------------------------------
 	// CRUD Todos
@@ -40,5 +38,14 @@ func RegisterPath(
 	e.GET("/todo", tdctrl.GetTodoCtrl())
 	e.PUT("/todo", tdctrl.PutTodoCtrl())
 	e.DELETE("/todo", tdctrl.DeleteTodoCtrl())
+
+	// ---------------------------------------------------------------------
+	// CRUD Projects
+	// ---------------------------------------------------------------------
+	e.POST("/project", pctrl.PostProjectsCtrl())
+	e.GET("/project/all", pctrl.GetAllProjectsCtrl())
+	e.GET("/project", pctrl.GetProjectsCtrl())
+	e.PUT("/project", pctrl.PutProjectsCtrl())
+	e.DELETE("/project", pctrl.DeleteProjectsCtrl())
 
 }

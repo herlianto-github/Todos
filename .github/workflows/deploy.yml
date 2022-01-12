@@ -1,4 +1,4 @@
-name: remote ssh command
+name: Deploy
 on: [push]
 jobs:
 
@@ -13,4 +13,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: 
+         cd projectcicd
+         cd Todos
+         git pull origin main 
+         docker-compose down && docker-compose up --build -d

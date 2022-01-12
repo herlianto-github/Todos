@@ -61,7 +61,6 @@ func TestUsers(t *testing.T) {
 		assert.Equal(t, 200, res.Code)
 
 	})
-
 	jwtToken := ""
 	t.Run("POST /users/login", func(t *testing.T) {
 		reqBody, _ := json.Marshal(map[string]string{
@@ -87,7 +86,6 @@ func TestUsers(t *testing.T) {
 		assert.Equal(t, 200, res.Code)
 
 	})
-
 	t.Run("GET /users", func(t *testing.T) {
 
 		req := httptest.NewRequest(http.MethodGet, "/", nil)
@@ -133,7 +131,6 @@ func TestFalseUsers(t *testing.T) {
 		assert.Equal(t, responses.Message, "Internal Server Error")
 		assert.Equal(t, res.Code, 500)
 	})
-
 	t.Run("POST /users/register", func(t *testing.T) {
 
 		reqBody, _ := json.Marshal(map[string]int{

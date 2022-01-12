@@ -22,18 +22,18 @@ type AppConfig struct {
 var lock = &sync.Mutex{}
 var appConfig *AppConfig
 
-func GetConfig(env string) *AppConfig {
+func GetConfig() *AppConfig {
 	lock.Lock()
 	defer lock.Unlock()
 
 	if appConfig == nil {
-		appConfig = initConfig(env)
+		appConfig = initConfig()
 	}
 
 	return appConfig
 }
 
-func initConfig(env string) *AppConfig {
+func initConfig() *AppConfig {
 	var defaultConfig AppConfig
 	defaultConfig.Port = 8000
 	defaultConfig.Database.Driver = "mysql"

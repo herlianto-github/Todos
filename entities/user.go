@@ -9,4 +9,5 @@ type User struct {
 	Name     string
 	Password string
 	Todo     []ToDo
+	Project  []Project
 }

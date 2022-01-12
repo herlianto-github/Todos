@@ -1,13 +1,21 @@
 package project
 
-import "todos/entities"
-
 type CreateProjectRequestFormat struct {
 	ProjectName string `json:"projectname" form:"projectname"`
-	Todo        []entities.ToDo
+	UserID      uint   `json:"userid" form:"userid"`
 }
 
+type GetAllProjectRequestFormat struct {
+	UserID int `json:"userid" form:"userid"`
+}
+
+type GetProjectRequestFormat struct {
+	ProjectID int `json:"projectid" form:"projectid"`
+}
+type DeleteProjectRequestFormat struct {
+	ProjectID int `json:"projectid" form:"TodoID"`
+}
 type PutProjectRequestFormat struct {
 	ProjectName string `json:"projectname" form:"projectname"`
-	Todo        []entities.ToDo
+	ProjectID   int    `json:"projectid" form:"projectid"`
 }

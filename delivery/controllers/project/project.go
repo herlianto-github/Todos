@@ -18,7 +18,7 @@ func NewProjectsControllers(prrep project.ProjectInterface) *ProjectsController 
 }
 
 // POST /projects/register
-func (prcon ProjectsController) PostToDoCtrl() echo.HandlerFunc {
+func (prcon ProjectsController) PostProjectsCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
 		newProjectReq := CreateProjectRequestFormat{}
@@ -27,10 +27,10 @@ func (prcon ProjectsController) PostToDoCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		if newProjectReq.ProjectName != "" && len(newProjectReq.Todo) != 0 {
+		if newProjectReq.ProjectName != "" && newProjectReq.UserID != 0 {
 			newProject := entities.Project{
 				ProjectName: newProjectReq.ProjectName,
-				Todo:        newProjectReq.Todo,
+				UserId:      newProjectReq.UserID,
 			}
 
 			_, err := prcon.Repo.Create(newProject)
@@ -47,20 +47,92 @@ func (prcon ProjectsController) PostToDoCtrl() echo.HandlerFunc {
 }
 
 // GET /projects
-func (prcon ProjectsController) GetProjectsCtrl() echo.HandlerFunc {
+func (prcon ProjectsController) GetAllProjectsCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		projects, err := prcon.Repo.GetAll()
+		userId := GetAllProjectRequestFormat{}
 
+		if err := c.Bind(&userId); err != nil {
+			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
+		}
+
+		projects, err := prcon.Repo.GetAll(userId.UserID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
 
-		response := GetProjectsResponseFormat{
-			Message: "Successful Operation",
-			Data:    projects,
+		return c.JSON(
+			http.StatusOK, map[string]interface{}{
+				"message": "success",
+				"data":    projects,
+			},
+		)
+	}
+}
+func (tdcon ProjectsController) GetProjectsCtrl() echo.HandlerFunc {
+
+	return func(c echo.Context) error {
+		ProjectId := GetProjectRequestFormat{}
+
+		if err := c.Bind(&ProjectId); err != nil {
+			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		return c.JSON(http.StatusOK, response)
+		projects, err := tdcon.Repo.Get(ProjectId.ProjectID)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+		}
+
+		return c.JSON(
+			http.StatusOK, map[string]interface{}{
+				"message": "success",
+				"data":    projects,
+			},
+		)
 	}
+
+}
+func (tdcon ProjectsController) DeleteProjectsCtrl() echo.HandlerFunc {
+
+	return func(c echo.Context) error {
+		ProjectId := DeleteProjectRequestFormat{}
+
+		if err := c.Bind(&ProjectId); err != nil {
+			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
+		}
+
+		_, err := tdcon.Repo.Delete(ProjectId.ProjectID)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+		}
+
+		return c.JSON(
+			http.StatusOK, map[string]interface{}{
+				"message": "success",
+			},
+		)
+	}
+
+}
+func (tdcon ProjectsController) PutProjectsCtrl() echo.HandlerFunc {
+
+	return func(c echo.Context) error {
+		PutProjectReq := PutProjectRequestFormat{}
+
+		if err := c.Bind(&PutProjectReq); err != nil {
+			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
+		}
+
+		newProject := entities.Project{
+			ProjectName: PutProjectReq.ProjectName,
+		}
+
+		_, err := tdcon.Repo.Update(newProject, PutProjectReq.ProjectID)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+		}
+
+		return c.JSON(http.StatusOK, common.NewSuccessOperationResponse())
+	}
+
 }

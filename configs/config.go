@@ -41,8 +41,8 @@ func initConfig() *AppConfig {
 	defaultConfig.Database.Port = 3306
 	//untuk docker
 	//defaultConfig.Database.Username = "root"
-	defaultConfig.Database.Username = "todosadmin"
-	defaultConfig.Database.Password = "todos123"
+	defaultConfig.Database.Username = "admin"
+	defaultConfig.Database.Password = "admin123"
 	defaultConfig.Database.Name = "to_do_lists_test"
 
 	viper.SetConfigType("yaml")

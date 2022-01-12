@@ -3,7 +3,7 @@ package todo
 import "todos/entities"
 
 type ToDoInterface interface {
-	GetAll() ([]entities.ToDo, error)
+	GetAll(userId int) ([]entities.ToDo, error)
 	Get(toDoId int) (entities.ToDo, error)
 	Create(todo entities.ToDo) (entities.ToDo, error)
 	Delete(toDoId int) (entities.ToDo, error)

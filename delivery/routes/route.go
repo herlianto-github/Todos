@@ -10,7 +10,10 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController, tdctrl *todo.TodosController) {
+func RegisterPath(
+	e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController,
+	tdctrl *todo.ToDoController,
+) {
 
 	// ---------------------------------------------------------------------
 	// Login & Register
@@ -32,10 +35,10 @@ func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.Users
 	// ---------------------------------------------------------------------
 	// CRUD Todos
 	// ---------------------------------------------------------------------
-	e.POST("/todo", toctrl.PostTodoCtrl())
-	e.GET("/todo", toctrl.GetAllTodoCtrl())
-	e.GET("/todo", toctrl.GetTodoCtrl())
-	e.PUT("/todo", toctrl.PutTodoCtrl())
-	e.DELETE("/todo", toctrl.DeleteTodoCtrl())
+	e.POST("/todo", tdctrl.PostTodoCtrl())
+	e.GET("/todo/all", tdctrl.GetAllTodoCtrl())
+	e.GET("/todo", tdctrl.GetTodoCtrl())
+	e.PUT("/todo", tdctrl.PutTodoCtrl())
+	e.DELETE("/todo", tdctrl.DeleteTodoCtrl())
 
 }

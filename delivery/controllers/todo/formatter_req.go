@@ -1,17 +1,23 @@
 package todo
 
 type CreateToDoRequestFormat struct {
-	ProjectID   uint   `json:"projectid" form:"projectid"`
-	UserID      uint   `json:"userid form:"userid`
 	Task        string `json:"task" form:"task"`
-	Status      string `json:"status" form:"status"`
 	Description string `json:"description" form:"description"`
+	UserID      uint   `json:"userid" form:"userid"`
+	ProjectID   *uint  `json:"projectid" form:"projectid"`
+}
+type GetAllToDoRequestFormat struct {
+	UserID int `json:"userid" form:"userid"`
 }
 
+type GetToDoRequestFormat struct {
+	ToDoID int `json:"todoid" form:"todoid"`
+}
+type DeleteToDoRequestFormat struct {
+	ToDoID int `json:"TodoID" form:"TodoID"`
+}
 type PutToDoRequestFormat struct {
-	ProjectID   uint   `json:"projectid" form:"projectid"`
-	UserID      uint   `json:"userid form:"userid`
+	ToDoID      int    `json:"todoid" form:"todoid"`
 	Task        string `json:"task" form:"task"`
-	Status      string `json:"status" form:"status"`
 	Description string `json:"description" form:"description"`
 }

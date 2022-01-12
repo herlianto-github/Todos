@@ -35,7 +35,7 @@ func main() {
 	projCtrl := project.NewProjectsControllers(projRepo)
 
 	todoRepo := todoRepo.NewToDoRepo(db)
-	todoCtrl := todo.NewTodosControllers(todoRepo)
+	todoCtrl := todo.NewToDoControllers(todoRepo)
 
 	routes.RegisterPath(e, authCtrl, userCtrl, projCtrl, todoCtrl)
 

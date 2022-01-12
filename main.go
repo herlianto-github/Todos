@@ -5,9 +5,11 @@ import (
 	"log"
 	"todos/configs"
 	"todos/delivery/controllers/auth"
+	"todos/delivery/controllers/todo"
 	"todos/delivery/controllers/users"
 	"todos/delivery/routes"
 	authRepo "todos/repository/auth"
+	todoRepo "todos/repository/to_do"
 	userRepo "todos/repository/users"
 	"todos/utils"
 
@@ -27,7 +29,10 @@ func main() {
 	userRepo := userRepo.NewUsersRepo(db)
 	userCtrl := users.NewUsersControllers(userRepo)
 
-	routes.RegisterPath(e, authCtrl, userCtrl)
+	todoRepo := todoRepo.NewTo_DoRepo(db)
+	todoCtrl := todo.NewToDoControllers(todoRepo)
+
+	routes.RegisterPath(e, authCtrl, userCtrl, todoCtrl)
 
 	address := fmt.Sprintf("localhost:%d", config.Port)
 	log.Fatal(e.Start(address))

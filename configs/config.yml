@@ -3,6 +3,7 @@ database:
   driver: "mysql" #possible value are mongodb or mysql
   address: "127.0.0.1"
   port: 3306
+  #untuk docker #username = "root"
   username: "todosadmin"
   password: "todos123"
-  name: "to_do_lists_test"
+  name: "to_do_lists"

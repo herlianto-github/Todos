@@ -1,4 +1,4 @@
-package users
+package user
 
 import (
 	"todos/entities"
@@ -26,9 +26,15 @@ func (ur *UserRepository) Get(userId int) (entities.User, error) {
 	return user, nil
 }
 
-func (ur *UserRepository) Create(user entities.User) (entities.User, error) {
-	ur.db.Save(&user)
-	return user, nil
+func (ur *UserRepository) Create(newUser entities.User) (entities.User, error) {
+	ur.db.Save(&newUser)
+	return newUser, nil
+}
+func (ur *UserRepository) Update(updateUser entities.User, userId int) (entities.User, error) {
+	user := entities.User{}
+	ur.db.Find(&user, "id=?", userId)
+	ur.db.Model(&user).Updates(updateUser)
+	return updateUser, nil
 }
 
 func (ur *UserRepository) Delete(userId int) (entities.User, error) {
@@ -36,11 +42,4 @@ func (ur *UserRepository) Delete(userId int) (entities.User, error) {
 	ur.db.Find(&user, "id=?", userId)
 	ur.db.Delete(&user)
 	return user, nil
-}
-
-func (ur *UserRepository) Update(newUser entities.User, userId int) (entities.User, error) {
-	user := entities.User{}
-	ur.db.Find(&user, "id=?", userId)
-	ur.db.Model(&user).Updates(newUser)
-	return newUser, nil
 }

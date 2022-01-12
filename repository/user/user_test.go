@@ -1,7 +1,6 @@
 package user
 
 import (
-	"fmt"
 	"testing"
 	"todos/configs"
 	"todos/entities"
@@ -51,7 +50,6 @@ func TestUsersRepo(t *testing.T) {
 		res, err := userRepo.Update(mockUpdateUser, 1)
 		assert.Nil(t, err)
 		assert.Equal(t, mockUpdateUser.Name, res.Name)
-		fmt.Println(res)
 	})
 
 	t.Run("Delete User", func(t *testing.T) {

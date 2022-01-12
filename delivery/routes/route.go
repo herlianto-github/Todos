@@ -10,10 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func RegisterPath(
-	e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController,
-	tdctrl *todo.ToDoController,
-) {
+func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController, tdctrl *todo.ToDoController) {
 
 	// ---------------------------------------------------------------------
 	// Login & Register
@@ -25,6 +22,9 @@ func RegisterPath(
 	// CRUD Users
 	// ---------------------------------------------------------------------
 	e.GET("/users", uctrl.GetUsersCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/users/:id", uctrl.GetUserCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/users/:id", uctrl.EditUserCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/users/:id", uctrl.DeleteUserCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 	// ---------------------------------------------------------------------
 	// CRUD Projects

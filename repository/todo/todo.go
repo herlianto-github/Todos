@@ -40,7 +40,7 @@ func (td *ToDoRepository) Delete(toDoId int) (entities.ToDo, error) {
 }
 
 func (td *ToDoRepository) Update(newToDo entities.ToDo, toDoId int) (entities.ToDo, error) {
-	toDo := entities.To_Do{}
+	toDo := entities.ToDo{}
 	fmt.Println(newToDo.Task)
 	td.db.Find(&toDo, "id=?", toDoId)
 	td.db.Model(&toDo).Updates(

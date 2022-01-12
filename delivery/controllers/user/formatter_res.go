@@ -16,3 +16,17 @@ type GetUsersResponseFormat struct {
 	Message string          `json:"message"`
 	Data    []entities.User `json:"data"`
 }
+
+type GetUserResponseFormat struct {
+	Message string        `json:"message"`
+	Data    entities.User `json:"data"`
+}
+
+type PutUserResponseFormat struct {
+	Message string        `json:"message"`
+	Data    entities.User `json:"data"`
+}
+
+type DeleteUserResponseFormat struct {
+	Message string `json:"message"`
+}

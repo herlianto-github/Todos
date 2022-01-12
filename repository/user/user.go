@@ -33,7 +33,11 @@ func (ur *UserRepository) Create(newUser entities.User) (entities.User, error) {
 func (ur *UserRepository) Update(updateUser entities.User, userId int) (entities.User, error) {
 	user := entities.User{}
 	ur.db.Find(&user, "id=?", userId)
-	ur.db.Model(&user).Updates(updateUser)
+
+	user.Name = updateUser.Name
+	user.Password = updateUser.Password
+
+	ur.db.Save(&user)
 	return updateUser, nil
 }
 

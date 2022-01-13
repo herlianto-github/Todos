@@ -7,5 +7,5 @@ type LoginRequestFormat struct {
 
 type LoginResponseFormat struct {
 	Message string `json:"message"`
-	token   string `json:"token"`
+	Token   string `json:"token"`
 }

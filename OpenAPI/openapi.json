@@ -1,22 +1,28 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Todos",
-    "contact": {
-      "name": "Todos",
-      "url": "https://github.com/herlianto-github/Todos"
-    }
+    "version": "1",
+    "title": "Todos App",
+    "description": "Todos App Des"
   },
   "servers": [
     {
-      "description": "Server Todos",
-      "url": "https://localhost:8000"
+      "description": "SwaggerHub API Auto Mocking",
+      "url": "https://virtserver.swaggerhub.com/herlianto/Todos/1"
+    },
+    {
+      "description": "Production Server",
+      "url": "https://herlianto-github.cloud.okteto.net"
+    },
+    {
+      "description": "Testing Server",
+      "url": "http://18.136.199.65:8000"
     }
   ],
   "paths": {
     "/users/register": {
       "post": {
+        "summary": "Create ID",
         "tags": [
           "Users"
         ],
@@ -41,6 +47,7 @@
     },
     "/users/login": {
       "post": {
+        "summary": "Login ID",
         "tags": [
           "Users"
         ],
@@ -78,8 +85,467 @@
     },
     "/users": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get all users",
         "tags": [
           "Users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a user by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Herlianto"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "herlianto123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/todos": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create Todo",
+        "tags": [
+          "Todo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectID": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Task": {
+                    "type": "string",
+                    "example": "makan ayam"
+                  },
+                  "Status": {
+                    "type": "string",
+                    "example": "completed"
+                  },
+                  "Description": {
+                    "type": "string",
+                    "example": "harus selesai tanggal 12 januari"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "400": {
+            "$ref": "#/components/responses/Response400"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get all todos",
+        "tags": [
+          "Todo"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/todos/{todoID}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a user by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectID": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Task": {
+                    "type": "string",
+                    "example": "makan sapi"
+                  },
+                  "Status": {
+                    "type": "string",
+                    "example": "not completed"
+                  },
+                  "Description": {
+                    "type": "string",
+                    "example": "harus selesai tanggal 14 januari"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create Project",
+        "tags": [
+          "Project"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "example": "Makan"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "400": {
+            "$ref": "#/components/responses/Response400"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get all projects",
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/projects/{projectID}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a user by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "example": "Minum"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -93,7 +559,17 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      },
       "Response200": {
         "description": "success create",
         "content": {

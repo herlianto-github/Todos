@@ -6,6 +6,7 @@ import (
 	"todos/entities"
 	"todos/repository/project"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 )
 
@@ -27,10 +28,14 @@ func (prcon ProjectsController) PostProjectsCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		if newProjectReq.ProjectName != "" && newProjectReq.UserID != 0 {
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+
+		if newProjectReq.ProjectName != "" {
 			newProject := entities.Project{
 				ProjectName: newProjectReq.ProjectName,
-				UserId:      newProjectReq.UserID,
+				UserId:      uint(userID),
 			}
 
 			_, err := prcon.Repo.Create(newProject)
@@ -56,7 +61,11 @@ func (prcon ProjectsController) GetAllProjectsCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		projects, err := prcon.Repo.GetAll(userId.UserID)
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+
+		projects, err := prcon.Repo.GetAll(userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
@@ -78,7 +87,11 @@ func (tdcon ProjectsController) GetProjectsCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		projects, err := tdcon.Repo.Get(ProjectId.ProjectID)
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+
+		projects, err := tdcon.Repo.Get(ProjectId.ProjectID, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
@@ -101,7 +114,11 @@ func (tdcon ProjectsController) DeleteProjectsCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		_, err := tdcon.Repo.Delete(ProjectId.ProjectID)
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+
+		_, err := tdcon.Repo.Delete(ProjectId.ProjectID, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
@@ -123,11 +140,15 @@ func (tdcon ProjectsController) PutProjectsCtrl() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+
 		newProject := entities.Project{
 			ProjectName: PutProjectReq.ProjectName,
 		}
 
-		_, err := tdcon.Repo.Update(newProject, PutProjectReq.ProjectID)
+		_, err := tdcon.Repo.Update(newProject, PutProjectReq.ProjectID, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}

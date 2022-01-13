@@ -4,5 +4,4 @@ COPY . ./
 RUN go mod download
 COPY *.go ./
 RUN go build -o /todos
-EXPOSE 8080
 CMD ["/todos"]

@@ -459,7 +459,6 @@
     },
     "/projects/{projectID}": {
       "put": {
-<<<<<<< HEAD
         "security": [
           {
             "bearerAuth": []
@@ -479,39 +478,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Response200"
-          },
-          "404": {
-            "$ref": "#/components/responses/Response404"
-          }
-        }
-      },
-      "delete": {
-=======
->>>>>>> testing
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Delete Projects by ProjectID and UserID",
-        "tags": [
-          "Project"
-        ],
-        "parameters": [
-          {
-            "name": "projectID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-<<<<<<< HEAD
-=======
         "requestBody": {
           "content": {
             "application/json": {
@@ -531,7 +497,6 @@
             }
           }
         },
->>>>>>> testing
         "responses": {
           "200": {
             "$ref": "#/components/responses/Response200"
@@ -540,22 +505,26 @@
             "$ref": "#/components/responses/Response404"
           }
         }
-      }
-    },
-    "/projects/all": {
-      "get": {
+      },
+      "delete": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-<<<<<<< HEAD
-        "summary": "Get All Projects",
-=======
         "summary": "Delete Projects by ProjectID and UserID",
->>>>>>> testing
         "tags": [
           "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {

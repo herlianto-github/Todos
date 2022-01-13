@@ -270,7 +270,6 @@ paths:
       security:
         - bearerAuth: []
       summary: Get a user by ID
-<<<<<<< HEAD
       tags:
         - Project
       responses:
@@ -283,24 +282,6 @@ paths:
       security:
         - bearerAuth: []
       summary: Update by ID
-=======
->>>>>>> testing
-      tags:
-        - Project
-      responses:
-        '200':
-          $ref: '#/components/responses/Response200'
-        '404':
-          $ref: '#/components/responses/Response404'
-<<<<<<< HEAD
-    delete:
-=======
-  /projects/{projectID}:
-    put:
->>>>>>> testing
-      security:
-        - bearerAuth: []
-      summary: Delete Projects by ProjectID and UserID
       tags:
         - Project
       parameters:
@@ -309,8 +290,6 @@ paths:
           required: true
           schema:
             type: integer
-<<<<<<< HEAD
-=======
       requestBody:
         content:
           application/json:
@@ -323,30 +302,28 @@ paths:
                 projectID:
                   type: integer
                   example: 1
->>>>>>> testing
       responses:
         '200':
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
-  /projects/all:
-    get:
+    delete:
       security:
         - bearerAuth: []
-<<<<<<< HEAD
-      summary: Get All Projects
-=======
       summary: Delete Projects by ProjectID and UserID
->>>>>>> testing
       tags:
         - Project
+      parameters:
+        - name: projectID
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
-<<<<<<< HEAD
-=======
   /projects/all:
     get:
       security:
@@ -359,7 +336,6 @@ paths:
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
->>>>>>> testing
 components:
   securitySchemes:
     bearerAuth:           

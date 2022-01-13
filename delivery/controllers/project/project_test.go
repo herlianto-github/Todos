@@ -188,28 +188,28 @@ func TestProject(t *testing.T) {
 		})
 }
 
-func TestFalseUsers(t *testing.T) {
-	e := echo.New()
+// func TestFalseUsers(t *testing.T) {
+// 	e := echo.New()
 
-	t.Run("POST /users/login", func(t *testing.T) {
+// 	t.Run("POST /users/login", func(t *testing.T) {
 
-		req := httptest.NewRequest(http.MethodPost, "/", nil)
-		res := httptest.NewRecorder()
+// 		req := httptest.NewRequest(http.MethodPost, "/", nil)
+// 		res := httptest.NewRecorder()
 
-		req.Header.Set("Content-Type", "application/json")
-		context := e.NewContext(req, res)
-		context.SetPath("/projects/")
+// 		req.Header.Set("Content-Type", "application/json")
+// 		context := e.NewContext(req, res)
+// 		context.SetPath("/projects/")
 
-		pCon := NewProjectsControllers(mockFalseProjectRepository{})
-		pCon.PostProjectsCtrl()(context)
+// 		pCon := NewProjectsControllers(mockFalseProjectRepository{})
+// 		pCon.PostProjectsCtrl()(context)
 
-		responses := CreateProjectResponseFormat{}
+// 		responses := CreateProjectResponseFormat{}
 
-		json.Unmarshal([]byte(res.Body.Bytes()), &responses)
-		assert.Equal(t, responses.Message, "Internal Server Error")
-		assert.Equal(t, res.Code, 500)
-	})
-}
+// 		json.Unmarshal([]byte(res.Body.Bytes()), &responses)
+// 		assert.Equal(t, responses.Message, "Internal Server Error")
+// 		assert.Equal(t, res.Code, 500)
+// 	})
+// }
 
 type mockAuthRepository struct{}
 

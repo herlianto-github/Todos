@@ -19,6 +19,10 @@ import (
 )
 
 func main() {
+<<<<<<< HEAD
+=======
+	//testing
+>>>>>>> testing
 	config := configs.GetConfig()
 	db := utils.InitDB(config)
 

@@ -16,7 +16,7 @@ servers:
 paths:
   /users/register:
     post:
-      summary: Create ID
+      summary: Create New User
       tags:
         - Users
       requestBody:
@@ -31,7 +31,7 @@ paths:
           $ref: '#/components/responses/Response400'
   /users/login:
     post:
-      summary: Login ID
+      summary: Login User
       tags:
         - Users
       requestBody:
@@ -57,7 +57,7 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Get all users
+      summary: Get All Users
       tags:
         - Users
       responses:
@@ -71,7 +71,7 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Get a user by ID
+      summary: Get User By ID
       tags:
         - Users
       parameters:
@@ -88,7 +88,7 @@ paths:
     put:
       security:
         - bearerAuth: []
-      summary: Update by ID
+      summary: Update User By ID
       tags:
         - Users
       parameters:
@@ -117,7 +117,7 @@ paths:
     delete:
       security:
         - bearerAuth: []
-      summary: Delete by ID
+      summary: Delete User ID
       tags:
         - Users
       parameters:
@@ -242,11 +242,11 @@ paths:
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
-  /projects/all:
+  /projects:
     post:
       security:
         - bearerAuth: []
-      summary: Create Project
+      summary: Create New Project
       tags:
         - Project
       requestBody:
@@ -269,7 +269,7 @@ paths:
     get:
       security:
         - bearerAuth: []
-      summary: Get all projects
+      summary: Get a user by ID
       tags:
         - Project
       responses:
@@ -278,23 +278,6 @@ paths:
         '404':
           $ref: '#/components/responses/Response404'
   /projects/{projectID}:
-    get:
-      security:
-        - bearerAuth: []
-      summary: Get a user by ID
-      tags:
-        - Project
-      parameters:
-        - name: projectID
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/Response200'
-        '404':
-          $ref: '#/components/responses/Response404'
     put:
       security:
         - bearerAuth: []
@@ -307,15 +290,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                projectName:
-                  type: string
-                  example: Minum
       responses:
         '200':
           $ref: '#/components/responses/Response200'
@@ -324,7 +298,7 @@ paths:
     delete:
       security:
         - bearerAuth: []
-      summary: Delete by ID
+      summary: Delete Projects by ProjectID and UserID
       tags:
         - Project
       parameters:
@@ -338,8 +312,18 @@ paths:
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
-    
-    
+  /projects/all:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get All Projects
+      tags:
+        - Project
+      responses:
+        '200':
+          $ref: '#/components/responses/Response200'
+        '404':
+          $ref: '#/components/responses/Response404'
 components:
   securitySchemes:
     bearerAuth:           

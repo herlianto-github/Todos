@@ -33,19 +33,19 @@ func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.Users
 	// ---------------------------------------------------------------------
 	// CRUD Todos
 	// ---------------------------------------------------------------------
-	e.POST("/todo", tdctrl.PostTodoCtrl())
-	e.GET("/todo/all", tdctrl.GetAllTodoCtrl())
-	e.GET("/todo", tdctrl.GetTodoCtrl())
-	e.PUT("/todo", tdctrl.PutTodoCtrl())
-	e.DELETE("/todo", tdctrl.DeleteTodoCtrl())
+	e.POST("/todos", tdctrl.PostTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/todos/all", tdctrl.GetAllTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/todos/:id", tdctrl.GetTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/todos", tdctrl.PutTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/todos", tdctrl.DeleteTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 	// ---------------------------------------------------------------------
 	// CRUD Projects
 	// ---------------------------------------------------------------------
-	e.POST("/project", pctrl.PostProjectsCtrl())
-	e.GET("/project/all", pctrl.GetAllProjectsCtrl())
-	e.GET("/project", pctrl.GetProjectsCtrl())
-	e.PUT("/project", pctrl.PutProjectsCtrl())
-	e.DELETE("/project", pctrl.DeleteProjectsCtrl())
+	e.POST("/projects", pctrl.PostProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/projects/all", pctrl.GetAllProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/projects/:id", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/projects", pctrl.PutProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/projects", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 }

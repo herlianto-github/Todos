@@ -398,7 +398,7 @@
         }
       }
     },
-    "/projects": {
+    "/projects/all": {
       "post": {
         "security": [
           {
@@ -418,6 +418,10 @@
                   "projectName": {
                     "type": "string",
                     "example": "Makan"
+                  },
+                  "userId": {
+                    "type": "integer",
+                    "example": 1
                   }
                 }
               }

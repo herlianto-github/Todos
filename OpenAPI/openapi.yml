@@ -242,7 +242,7 @@ paths:
           $ref: '#/components/responses/Response200'
         '404':
           $ref: '#/components/responses/Response404'
-  /projects:
+  /projects/all:
     post:
       security:
         - bearerAuth: []
@@ -258,6 +258,9 @@ paths:
                 projectName:
                   type: string
                   example: Makan
+                userId:
+                  type: integer
+                  example: 1
       responses:
         '200':
           $ref: '#/components/responses/Response200'

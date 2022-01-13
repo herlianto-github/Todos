@@ -19,7 +19,7 @@ import (
 )
 
 func main() {
-	//test project test unit
+
 	config := configs.GetConfig()
 	db := utils.InitDB(config)
 

@@ -20,9 +20,9 @@ func (prrep *ProjectRepository) GetAll(userId int) ([]entities.Project, error) {
 	return project, nil
 }
 
-func (prrep *ProjectRepository) Get(projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Get(projectId, userId int) (entities.Project, error) {
 	project := entities.Project{}
-	prrep.db.Find(&project, projectId)
+	prrep.db.Find(&project, projectId, userId)
 	return project, nil
 }
 
@@ -31,14 +31,14 @@ func (prrep *ProjectRepository) Create(project entities.Project) (entities.Proje
 	return project, nil
 }
 
-func (prrep *ProjectRepository) Delete(projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Delete(projectId, userId int) (entities.Project, error) {
 	project := entities.Project{}
 	prrep.db.Find(&project, "id=?", projectId)
 	prrep.db.Delete(&project)
 	return project, nil
 }
 
-func (prrep *ProjectRepository) Update(newProject entities.Project, projectId int) (entities.Project, error) {
+func (prrep *ProjectRepository) Update(newProject entities.Project, projectId, userId int) (entities.Project, error) {
 	project := entities.Project{}
 	prrep.db.Find(&project, "id=?", projectId)
 	prrep.db.Model(&project).Update("project_name", newProject.ProjectName)

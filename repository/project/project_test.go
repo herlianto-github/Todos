@@ -45,7 +45,7 @@ func TestProjectRepo(t *testing.T) {
 		assert.Equal(t, 1, int(res.ID))
 	})
 	t.Run("Select Project from Database where projectID 1", func(t *testing.T) {
-		res, err := projectRepo.Get(1)
+		res, err := projectRepo.Get(1, 1)
 		assert.Nil(t, err)
 		assert.Equal(t, res, res)
 	})
@@ -60,13 +60,13 @@ func TestProjectRepo(t *testing.T) {
 		mockUpdateProject.ProjectName = "UPDATE ProjectName1"
 		mockUpdateProject.Todo = []entities.ToDo{}
 
-		res, err := projectRepo.Update(mockUpdateProject, 1)
+		res, err := projectRepo.Update(mockUpdateProject, 1, 1)
 		assert.Nil(t, err)
 		assert.Equal(t, res, res)
 	})
 
 	t.Run("Delete Project by projectID", func(t *testing.T) {
-		res, err := projectRepo.Delete(1)
+		res, err := projectRepo.Delete(1, 1)
 		assert.Nil(t, err)
 		assert.Equal(t, res, res)
 	})

@@ -157,11 +157,11 @@ func TestProject(t *testing.T) {
 			context.SetParamValues("1")
 
 			pCon := NewProjectsControllers(mockProjectRepository{})
-			middleware.JWT([]byte("RAHASIA"))(pCon.GetProjectsCtrl())(context)
+			middleware.JWT([]byte("RAHASIA"))(pCon.PutProjectsCtrl())(context)
 
 			responses := CreateProjectResponseFormat{}
 			json.Unmarshal([]byte(res.Body.Bytes()), &responses)
-			assert.Equal(t, "success", responses.Message)
+			assert.Equal(t, "Successful Operation", responses.Message)
 			assert.Equal(t, 200, res.Code)
 		})
 	t.Run(
@@ -179,13 +179,36 @@ func TestProject(t *testing.T) {
 			context.SetParamValues("1")
 
 			pCon := NewProjectsControllers(mockProjectRepository{})
-			middleware.JWT([]byte("RAHASIA"))(pCon.GetProjectsCtrl())(context)
+			middleware.JWT([]byte("RAHASIA"))(pCon.DeleteProjectsCtrl())(context)
 
 			responses := CreateProjectResponseFormat{}
 			json.Unmarshal([]byte(res.Body.Bytes()), &responses)
 			assert.Equal(t, "success", responses.Message)
 			assert.Equal(t, 200, res.Code)
 		})
+}
+
+func TestFalseUsers(t *testing.T) {
+	e := echo.New()
+
+	t.Run("POST /users/login", func(t *testing.T) {
+
+		req := httptest.NewRequest(http.MethodPost, "/", nil)
+		res := httptest.NewRecorder()
+
+		req.Header.Set("Content-Type", "application/json")
+		context := e.NewContext(req, res)
+		context.SetPath("/projects/")
+
+		pCon := NewProjectsControllers(mockFalseProjectRepository{})
+		pCon.PostProjectsCtrl()(context)
+
+		responses := CreateProjectResponseFormat{}
+
+		json.Unmarshal([]byte(res.Body.Bytes()), &responses)
+		assert.Equal(t, responses.Message, "Internal Server Error")
+		assert.Equal(t, res.Code, 500)
+	})
 }
 
 type mockAuthRepository struct{}
@@ -216,20 +239,20 @@ func (mpr mockProjectRepository) Delete(projectid, userId int) (entities.Project
 
 type mockFalseProjectRepository struct{}
 
-func (mpr mockFalseProjectRepository) GetAll() ([]entities.Project, error) {
+func (mpr mockFalseProjectRepository) GetAll(userId int) ([]entities.Project, error) {
 	return []entities.Project{
 		{ProjectName: "ProjectName1", UserId: 1, Todo: []entities.ToDo{}},
 	}, errors.New("Bad Request")
 }
-func (mpr mockFalseProjectRepository) Get(userId int) (entities.Project, error) {
+func (mpr mockFalseProjectRepository) Get(projectId, userId int) (entities.Project, error) {
 	return entities.Project{ProjectName: "ProjectName1", UserId: 1, Todo: []entities.ToDo{}}, errors.New("Bad Request")
 }
 func (mpr mockFalseProjectRepository) Create(newUser entities.Project) (entities.Project, error) {
 	return entities.Project{ProjectName: "ProjectName1", UserId: 1, Todo: []entities.ToDo{}}, errors.New("Bad Request")
 }
-func (mpr mockFalseProjectRepository) Update(updateUser entities.Project, userId int) (entities.Project, error) {
+func (mpr mockFalseProjectRepository) Update(updateUser entities.Project, projectId, userId int) (entities.Project, error) {
 	return entities.Project{ProjectName: "ProjectName1", UserId: 1, Todo: []entities.ToDo{}}, errors.New("Bad Request")
 }
-func (mpr mockFalseProjectRepository) Delete(userId int) (entities.Project, error) {
+func (mpr mockFalseProjectRepository) Delete(projectid, userId int) (entities.Project, error) {
 	return entities.Project{ID: 1, ProjectName: "ProjectName1", UserId: 1, Todo: []entities.ToDo{}}, errors.New("Bad Request")
 }

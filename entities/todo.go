@@ -8,7 +8,7 @@ type ToDo struct {
 	ID          int
 	ProjectID   *uint
 	UserID      uint
-	Task        string
+	Task        string `gorm:"default: In Progress"`
 	Status      string
 	Description string
 }

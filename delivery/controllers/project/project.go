@@ -72,7 +72,7 @@ func (prcon ProjectsController) GetAllProjectsCtrl() echo.HandlerFunc {
 
 		return c.JSON(
 			http.StatusOK, map[string]interface{}{
-				"message": "success",
+				"message": "Successful Operation",
 				"data":    projects,
 			},
 		)
@@ -98,7 +98,7 @@ func (tdcon ProjectsController) GetProjectsCtrl() echo.HandlerFunc {
 
 		return c.JSON(
 			http.StatusOK, map[string]interface{}{
-				"message": "success",
+				"message": "Successful Operation",
 				"data":    projects,
 			},
 		)
@@ -125,7 +125,7 @@ func (tdcon ProjectsController) DeleteProjectsCtrl() echo.HandlerFunc {
 
 		return c.JSON(
 			http.StatusOK, map[string]interface{}{
-				"message": "success",
+				"message": "Successful Operation",
 			},
 		)
 	}

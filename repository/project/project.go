@@ -1,7 +1,6 @@
 package project
 
 import (
-	"fmt"
 	"todos/entities"
 
 	"gorm.io/gorm"
@@ -24,7 +23,6 @@ func (prrep *ProjectRepository) GetAll(userId int) ([]entities.Project, error) {
 func (prrep *ProjectRepository) Get(projectId int) (entities.Project, error) {
 	project := entities.Project{}
 	prrep.db.Find(&project, projectId)
-	fmt.Println("repo", project)
 	return project, nil
 }
 

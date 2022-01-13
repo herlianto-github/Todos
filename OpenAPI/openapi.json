@@ -17,6 +17,7 @@
   "paths": {
     "/users/register": {
       "post": {
+        "summary": "Create ID",
         "tags": [
           "Users"
         ],
@@ -41,6 +42,7 @@
     },
     "/users/login": {
       "post": {
+        "summary": "Login ID",
         "tags": [
           "Users"
         ],
@@ -78,8 +80,309 @@
     },
     "/users": {
       "get": {
+        "summary": "Get all users",
         "tags": [
           "Users"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete by ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/todos": {
+      "post": {
+        "summary": "Create Todo",
+        "tags": [
+          "Todo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "400": {
+            "$ref": "#/components/responses/Response400"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all todos",
+        "tags": [
+          "Todo"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/todos/{todoID}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete by ID",
+        "tags": [
+          "Todo"
+        ],
+        "parameters": [
+          {
+            "name": "todoID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "summary": "Create Project",
+        "tags": [
+          "Project"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "400": {
+            "$ref": "#/components/responses/Response400"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all projects",
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/projects/{projectID}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete by ID",
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "projectID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {

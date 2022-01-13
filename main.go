@@ -38,6 +38,6 @@ func main() {
 
 	routes.RegisterPath(e, authCtrl, userCtrl, projCtrl, todoCtrl)
 
-	address := fmt.Sprintf("localhost:%d", config.Port)
+	address := fmt.Sprintf(":%d", config.Port)
 	log.Fatal(e.Start(address))
 }

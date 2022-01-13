@@ -1,7 +1,0 @@
-mode: set
-todos/repository/user/user.go:13.48,15.2 1 1
-todos/repository/user/user.go:17.61,21.2 3 1
-todos/repository/user/user.go:23.66,27.2 3 1
-todos/repository/user/user.go:29.80,32.2 2 1
-todos/repository/user/user.go:33.95,42.2 6 1
-todos/repository/user/user.go:44.69,49.2 4 1

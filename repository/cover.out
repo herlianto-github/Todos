@@ -1,0 +1,21 @@
+mode: set
+todos/repository/auth/auth.go:14.47,16.2 1 0
+todos/repository/auth/auth.go:18.83,26.2 6 0
+todos/repository/todo/todo.go:14.47,16.2 1 1
+todos/repository/todo/todo.go:18.71,22.2 3 1
+todos/repository/todo/todo.go:24.66,28.2 3 1
+todos/repository/todo/todo.go:30.77,33.2 2 1
+todos/repository/todo/todo.go:35.69,40.2 4 1
+todos/repository/todo/todo.go:42.92,53.2 5 1
+todos/repository/user/user.go:13.48,15.2 1 1
+todos/repository/user/user.go:17.61,21.2 3 1
+todos/repository/user/user.go:23.66,27.2 3 1
+todos/repository/user/user.go:29.80,32.2 2 1
+todos/repository/user/user.go:33.95,42.2 6 1
+todos/repository/user/user.go:44.69,49.2 4 1
+todos/repository/project/project.go:13.53,15.2 1 1
+todos/repository/project/project.go:17.80,21.2 3 1
+todos/repository/project/project.go:23.78,27.2 3 1
+todos/repository/project/project.go:29.92,32.2 2 1
+todos/repository/project/project.go:34.81,39.2 4 1
+todos/repository/project/project.go:41.110,46.2 4 1

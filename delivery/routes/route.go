@@ -46,6 +46,6 @@ func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.Users
 	e.GET("/projects/all", pctrl.GetAllProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 	e.GET("/projects", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 	e.PUT("/projects", pctrl.PutProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
-	e.DELETE("/projects", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/projects/:id", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 }

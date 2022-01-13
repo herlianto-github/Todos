@@ -33,43 +33,53 @@ func TestTodoRepo(t *testing.T) {
 
 	todoRepo := NewToDoRepo(db)
 
-	t.Run("Insert ToDo into Database", func(t *testing.T) {
-		var mockInsertToDo entities.ToDo
-		mockInsertToDo.UserID = 1
-		mockInsertToDo.Task = "Lanjut project"
-		mockInsertToDo.Status = "in Progress"
-		mockInsertToDo.Description = "Nyelesaiin project"
+	t.Run(
+		"Insert ToDo into Database", func(t *testing.T) {
+			var mockInsertToDo entities.ToDo
+			mockInsertToDo.UserID = 1
+			mockInsertToDo.Task = "Lanjut project"
+			mockInsertToDo.Status = "in Progress"
+			mockInsertToDo.Description = "Nyelesaiin project"
 
-		res, err := todoRepo.Create(mockInsertToDo)
-		assert.Nil(t, err)
-		assert.Equal(t, mockInsertToDo.Task, res.Task)
-		assert.Equal(t, 1, int(res.ID))
-	})
-	t.Run("Select ToDo from Database where ToDoID 1", func(t *testing.T) {
-		res, err := todoRepo.Get(1)
-		assert.Nil(t, err)
-		assert.Equal(t, res, res)
-	})
-	t.Run("Select ToDo from Database where userID 1", func(t *testing.T) {
-		res, err := todoRepo.GetAll(1)
-		assert.Nil(t, err)
-		assert.Equal(t, res, res)
-	})
+			res, err := todoRepo.Create(mockInsertToDo)
+			assert.Nil(t, err)
+			assert.Equal(t, mockInsertToDo.Task, res.Task)
+			assert.Equal(t, 1, int(res.ID))
+		},
+	)
+	t.Run(
+		"Select ToDo from Database where ToDoID 1", func(t *testing.T) {
+			res, err := todoRepo.Get(1, 1)
+			assert.Nil(t, err)
+			assert.Equal(t, res, res)
+		},
+	)
+	t.Run(
+		"Select ToDo from Database where userID 1", func(t *testing.T) {
+			res, err := todoRepo.GetAll(1)
+			assert.Nil(t, err)
+			assert.Equal(t, res, res)
+		},
+	)
 
-	t.Run("Update ToDo by ToDoID", func(t *testing.T) {
-		var mockUpdateToDo entities.ToDo
-		mockUpdateToDo.Task = "UPDATE Lanjut project"
-		mockUpdateToDo.Status = "Reopen"
-		mockUpdateToDo.Description = "UPDATE Nyelesaiin project"
+	t.Run(
+		"Update ToDo by ToDoID", func(t *testing.T) {
+			var mockUpdateToDo entities.ToDo
+			mockUpdateToDo.Task = "UPDATE Lanjut project"
+			mockUpdateToDo.Status = "Reopen"
+			mockUpdateToDo.Description = "UPDATE Nyelesaiin project"
 
-		res, err := todoRepo.Update(mockUpdateToDo, 1)
-		assert.Nil(t, err)
-		assert.Equal(t, res, res)
-	})
+			res, err := todoRepo.Update(mockUpdateToDo, 1, 1)
+			assert.Nil(t, err)
+			assert.Equal(t, res, res)
+		},
+	)
 
-	t.Run("Delete ToDo by ToDo Id", func(t *testing.T) {
-		res, err := todoRepo.Delete(1)
-		assert.Nil(t, err)
-		assert.Equal(t, res, res)
-	})
+	t.Run(
+		"Delete ToDo by ToDo Id", func(t *testing.T) {
+			res, err := todoRepo.Delete(1, 1)
+			assert.Nil(t, err)
+			assert.Equal(t, res, res)
+		},
+	)
 }

@@ -19,7 +19,6 @@ import (
 )
 
 func main() {
-
 	config := configs.GetConfig()
 	db := utils.InitDB(config)
 
@@ -39,6 +38,6 @@ func main() {
 
 	routes.RegisterPath(e, authCtrl, userCtrl, projCtrl, todoCtrl)
 
-	address := fmt.Sprintf(":%d", config.Port)
+	address := fmt.Sprintf("localhost:%d", config.Port)
 	log.Fatal(e.Start(address))
 }

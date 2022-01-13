@@ -37,8 +37,8 @@ func initConfig() *AppConfig {
 	var defaultConfig AppConfig
 	defaultConfig.Port = 8000
 	defaultConfig.Database.Driver = "mysql"
-	defaultConfig.Database.Address = "database-ku.cwid5dwr9dfn.ap-southeast-1.rds.amazonaws.com"
-	// defaultConfig.Database.Address = "localhost"
+	// defaultConfig.Database.Address = "database-ku.cwid5dwr9dfn.ap-southeast-1.rds.amazonaws.com"
+	defaultConfig.Database.Address = "localhost"
 	defaultConfig.Database.Port = 3306
 	//untuk docker
 	//defaultConfig.Database.Username = "root"

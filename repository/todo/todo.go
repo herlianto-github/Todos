@@ -1,7 +1,6 @@
 package todo
 
 import (
-	"fmt"
 	"todos/entities"
 
 	"gorm.io/gorm"
@@ -18,12 +17,14 @@ func NewToDoRepo(db *gorm.DB) *ToDoRepository {
 func (td *ToDoRepository) GetAll(userID int) ([]entities.ToDo, error) {
 	toDos := []entities.ToDo{}
 	td.db.Where("user_id = ?", userID).Find(&toDos)
+
 	return toDos, nil
 }
 
-func (td *ToDoRepository) Get(toDoId int) (entities.ToDo, error) {
+func (td *ToDoRepository) Get(toDoId, userId int) (entities.ToDo, error) {
 	toDo := entities.ToDo{}
-	td.db.Find(&toDo, toDoId)
+	td.db.Where("id=?", toDoId, "user_id=?", userId).Find(&toDo)
+
 	return toDo, nil
 }
 
@@ -32,17 +33,17 @@ func (td *ToDoRepository) Create(toDo entities.ToDo) (entities.ToDo, error) {
 	return toDo, nil
 }
 
-func (td *ToDoRepository) Delete(toDoId int) (entities.ToDo, error) {
+func (td *ToDoRepository) Delete(toDoId, userID int) (entities.ToDo, error) {
 	toDo := entities.ToDo{}
-	td.db.Find(&toDo, "id=?", toDoId)
+	td.db.Find(&toDo, "id=?", toDoId, userID)
 	td.db.Delete(&toDo)
 	return toDo, nil
 }
 
-func (td *ToDoRepository) Update(newToDo entities.ToDo, toDoId int) (entities.ToDo, error) {
+func (td *ToDoRepository) Update(newToDo entities.ToDo, toDoId, userId int) (entities.ToDo, error) {
 	toDo := entities.ToDo{}
-	fmt.Println(newToDo.Task)
-	td.db.Find(&toDo, "id=?", toDoId)
+
+	td.db.Find(&toDo, "id=?", toDoId, userId)
 	td.db.Model(&toDo).Updates(
 		map[string]interface{}{
 			"task": newToDo.Task, "description": newToDo.Description,

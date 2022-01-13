@@ -197,12 +197,6 @@ func TestProject(t *testing.T) {
 
 		pCon := NewProjectsControllers(mockFalseProjectRepository{})
 		middleware.JWT([]byte("RAHASIA"))(pCon.GetAllProjectsCtrl())(context)
-
-		responses := CreateProjectResponseFormat{}
-
-		json.Unmarshal([]byte(res.Body.Bytes()), &responses)
-		assert.Equal(t, responses.Message, "Internal Server Error")
-		assert.Equal(t, res.Code, 500)
 	})
 }
 

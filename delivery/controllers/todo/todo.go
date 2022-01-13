@@ -1,8 +1,10 @@
 package todo
 
 import (
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"strconv"
 	"todos/delivery/common"
 	"todos/entities"
 	"todos/repository/todo"
@@ -22,15 +24,17 @@ func (tdcon ToDoController) PostTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
 		newTodoReq := CreateToDoRequestFormat{}
-
 		if err := c.Bind(&newTodoReq); err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := uint(claims["userid"].(float64))
 
 		newTodo := entities.ToDo{
 			Task:        newTodoReq.Task,
+			UserID:      userID,
 			Description: newTodoReq.Description,
-			UserID:      newTodoReq.UserID,
 			ProjectID:   newTodoReq.ProjectID,
 		}
 
@@ -46,13 +50,13 @@ func (tdcon ToDoController) PostTodoCtrl() echo.HandlerFunc {
 func (tdcon ToDoController) GetAllTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		userId := GetAllToDoRequestFormat{}
 
-		if err := c.Bind(&userId); err != nil {
-			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
-		}
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
 
-		todos, err := tdcon.Repo.GetAll(userId.UserID)
+		todos, err := tdcon.Repo.GetAll(userID)
+
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
@@ -69,20 +73,28 @@ func (tdcon ToDoController) GetAllTodoCtrl() echo.HandlerFunc {
 func (tdcon ToDoController) GetTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		ToDoId := GetToDoRequestFormat{}
-
-		if err := c.Bind(&ToDoId); err != nil {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		todos, err := tdcon.Repo.Get(ToDoId.ToDoID)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
+		todos, err := tdcon.Repo.Get(id, userID)
+
+		if todos.ID != 0 && err != nil {
+			return c.JSON(
+				http.StatusOK, map[string]interface{}{
+					"message": "succes",
+					"data":    todos,
+				},
+			)
 		}
 
 		return c.JSON(
-			http.StatusOK, map[string]interface{}{
-				"message": "success",
+			http.StatusNotFound, map[string]interface{}{
+				"message": common.NewNotFoundResponse(),
 				"data":    todos,
 			},
 		)
@@ -92,13 +104,13 @@ func (tdcon ToDoController) GetTodoCtrl() echo.HandlerFunc {
 func (tdcon ToDoController) DeleteTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		ToDoId := DeleteToDoRequestFormat{}
+		var err error
+		id, err := strconv.Atoi(c.Param("id"))
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
 
-		if err := c.Bind(&ToDoId); err != nil {
-			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
-		}
-
-		_, err := tdcon.Repo.Delete(ToDoId.ToDoID)
+		_, err = tdcon.Repo.Delete(id, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}
@@ -115,7 +127,9 @@ func (tdcon ToDoController) PutTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
 		PutTodoReq := PutToDoRequestFormat{}
-
+		uid := c.Get("user").(*jwt.Token)
+		claims := uid.Claims.(jwt.MapClaims)
+		userID := int(claims["userid"].(float64))
 		if err := c.Bind(&PutTodoReq); err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
@@ -126,7 +140,7 @@ func (tdcon ToDoController) PutTodoCtrl() echo.HandlerFunc {
 			Description: PutTodoReq.Description,
 		}
 
-		_, err := tdcon.Repo.Update(newTodo, PutTodoReq.ToDoID)
+		_, err := tdcon.Repo.Update(newTodo, PutTodoReq.ToDoID, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}

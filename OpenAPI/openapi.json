@@ -459,6 +459,7 @@
     },
     "/projects/{projectID}": {
       "put": {
+<<<<<<< HEAD
         "security": [
           {
             "bearerAuth": []
@@ -488,6 +489,8 @@
         }
       },
       "delete": {
+=======
+>>>>>>> testing
         "security": [
           {
             "bearerAuth": []
@@ -506,6 +509,53 @@
               "type": "integer"
             }
           }
+        ],
+<<<<<<< HEAD
+=======
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "example": "Minum"
+                  },
+                  "projectID": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+>>>>>>> testing
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Response200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Response404"
+          }
+        }
+      }
+    },
+    "/projects/all": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+<<<<<<< HEAD
+        "summary": "Get All Projects",
+=======
+        "summary": "Delete Projects by ProjectID and UserID",
+>>>>>>> testing
+        "tags": [
+          "Project"
         ],
         "responses": {
           "200": {

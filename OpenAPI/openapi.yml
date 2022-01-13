@@ -7,7 +7,7 @@ info:
     url: https://github.com/herlianto-github/Todos
 servers:
   - description: Server Todos
-    url: https://localhost:8000
+    url: https://localhost
 paths:
   /users/register:
     post:
@@ -84,6 +84,18 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Herlianto
+                password:
+                  type: string
+                  example: herlianto123
       responses:
         '200':
           $ref: '#/components/responses/Response200'
@@ -113,7 +125,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersSchema'
+              type: object
+              properties:
+                projectID:
+                  type: integer
+                  example: 1
+                Task:
+                  type: string
+                  example: makan ayam
+                Status:
+                  type: string
+                  example: completed
+                Description:
+                  type: string
+                  example: harus selesai tanggal 12 januari
       responses:
         '200':
           $ref: '#/components/responses/Response200'
@@ -154,6 +179,24 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectID:
+                  type: integer
+                  example: 1
+                Task:
+                  type: string
+                  example: makan sapi
+                Status:
+                  type: string
+                  example: not completed
+                Description:
+                  type: string
+                  example: harus selesai tanggal 14 januari
       responses:
         '200':
           $ref: '#/components/responses/Response200'
@@ -183,7 +226,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersSchema'
+              type: object
+              properties:
+                projectName:
+                  type: string
+                  example: Makan
       responses:
         '200':
           $ref: '#/components/responses/Response200'
@@ -224,6 +271,15 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectName:
+                  type: string
+                  example: Minum
       responses:
         '200':
           $ref: '#/components/responses/Response200'

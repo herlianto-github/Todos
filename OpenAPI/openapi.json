@@ -1,17 +1,22 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Todos",
-    "contact": {
-      "name": "Todos",
-      "url": "https://github.com/herlianto-github/Todos"
-    }
+    "version": "1",
+    "title": "Todos App",
+    "description": "Todos App Des"
   },
   "servers": [
     {
-      "description": "Server Todos",
-      "url": "https://localhost:8000"
+      "description": "SwaggerHub API Auto Mocking",
+      "url": "https://virtserver.swaggerhub.com/herlianto/Todos/1"
+    },
+    {
+      "description": "Production Server",
+      "url": "https://herlianto-github.cloud.okteto.net"
+    },
+    {
+      "description": "Testing Server",
+      "url": "http://18.136.199.65:8000"
     }
   ],
   "paths": {
@@ -80,6 +85,11 @@
     },
     "/users": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get all users",
         "tags": [
           "Users"
@@ -87,6 +97,9 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/Response200"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "404": {
             "$ref": "#/components/responses/Response404"
@@ -96,6 +109,11 @@
     },
     "/users/{userId}": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get a user by ID",
         "tags": [
           "Users"
@@ -120,6 +138,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update by ID",
         "tags": [
           "Users"
@@ -134,6 +157,25 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Herlianto"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "herlianto123"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/Response200"
@@ -144,6 +186,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete by ID",
         "tags": [
           "Users"
@@ -170,6 +217,11 @@
     },
     "/todos": {
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Create Todo",
         "tags": [
           "Todo"
@@ -178,7 +230,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersSchema"
+                "type": "object",
+                "properties": {
+                  "projectID": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Task": {
+                    "type": "string",
+                    "example": "makan ayam"
+                  },
+                  "Status": {
+                    "type": "string",
+                    "example": "completed"
+                  },
+                  "Description": {
+                    "type": "string",
+                    "example": "harus selesai tanggal 12 januari"
+                  }
+                }
               }
             }
           }
@@ -193,6 +263,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get all todos",
         "tags": [
           "Todo"
@@ -209,6 +284,11 @@
     },
     "/todos/{todoID}": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get a user by ID",
         "tags": [
           "Todo"
@@ -233,6 +313,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update by ID",
         "tags": [
           "Todo"
@@ -247,6 +332,33 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectID": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "Task": {
+                    "type": "string",
+                    "example": "makan sapi"
+                  },
+                  "Status": {
+                    "type": "string",
+                    "example": "not completed"
+                  },
+                  "Description": {
+                    "type": "string",
+                    "example": "harus selesai tanggal 14 januari"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/Response200"
@@ -257,6 +369,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete by ID",
         "tags": [
           "Todo"
@@ -283,6 +400,11 @@
     },
     "/projects": {
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Create Project",
         "tags": [
           "Project"
@@ -291,7 +413,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersSchema"
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "example": "Makan"
+                  }
+                }
               }
             }
           }
@@ -306,6 +434,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get all projects",
         "tags": [
           "Project"
@@ -322,6 +455,11 @@
     },
     "/projects/{projectID}": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get a user by ID",
         "tags": [
           "Project"
@@ -346,6 +484,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update by ID",
         "tags": [
           "Project"
@@ -360,6 +503,21 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "example": "Minum"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/Response200"
@@ -370,6 +528,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete by ID",
         "tags": [
           "Project"
@@ -396,7 +559,17 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      },
       "Response200": {
         "description": "success create",
         "content": {

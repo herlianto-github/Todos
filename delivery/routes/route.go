@@ -10,8 +10,12 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController, tdctrl *todo.ToDoController) {
+func RegisterPath(
+	e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController,
+	tdctrl *todo.ToDoController,
+) {
 
+	e.Use(middleware.RemoveTrailingSlash())
 	// ---------------------------------------------------------------------
 	// Login & Register
 	// ---------------------------------------------------------------------
@@ -33,19 +37,19 @@ func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.Users
 	// ---------------------------------------------------------------------
 	// CRUD Todos
 	// ---------------------------------------------------------------------
-	e.POST("/todo", tdctrl.PostTodoCtrl())
-	e.GET("/todo/all", tdctrl.GetAllTodoCtrl())
-	e.GET("/todo", tdctrl.GetTodoCtrl())
-	e.PUT("/todo", tdctrl.PutTodoCtrl())
-	e.DELETE("/todo", tdctrl.DeleteTodoCtrl())
+	e.POST("/todos", tdctrl.PostTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/todos/all", tdctrl.GetAllTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/todos/:id", tdctrl.GetTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/todos", tdctrl.PutTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/todos", tdctrl.DeleteTodoCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 	// ---------------------------------------------------------------------
 	// CRUD Projects
 	// ---------------------------------------------------------------------
-	e.POST("/project", pctrl.PostProjectsCtrl())
-	e.GET("/project/all", pctrl.GetAllProjectsCtrl())
-	e.GET("/project", pctrl.GetProjectsCtrl())
-	e.PUT("/project", pctrl.PutProjectsCtrl())
-	e.DELETE("/project", pctrl.DeleteProjectsCtrl())
+	e.POST("/project", pctrl.PostProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/project/all", pctrl.GetAllProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/project", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/project", pctrl.PutProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/project", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 }

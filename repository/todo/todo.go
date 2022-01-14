@@ -21,9 +21,9 @@ func (td *ToDoRepository) GetAll(userID int) ([]entities.ToDo, error) {
 	return toDos, nil
 }
 
-func (td *ToDoRepository) Get(toDoId, userId int) (entities.ToDo, error) {
-	toDo := entities.ToDo{}
-	td.db.Where("id=?", toDoId, "user_id=?", userId).Find(&toDo)
+func (td *ToDoRepository) Get(toDoId, userId int) ([]entities.ToDo, error) {
+	toDo := []entities.ToDo{}
+	td.db.Where("id = ? AND user_id = ?", toDoId, userId).Find(&toDo)
 
 	return toDo, nil
 }
@@ -40,15 +40,12 @@ func (td *ToDoRepository) Delete(toDoId, userID int) (entities.ToDo, error) {
 	return toDo, nil
 }
 
-func (td *ToDoRepository) Update(newToDo entities.ToDo, toDoId, userId int) (entities.ToDo, error) {
-	toDo := entities.ToDo{}
+func (td *ToDoRepository) Update(newToDo entities.ToDo, toDoId, userId int) ([]entities.ToDo, error) {
+	toDo := []entities.ToDo{}
 
-	td.db.Find(&toDo, "id=?", toDoId, userId)
-	td.db.Model(&toDo).Updates(
-		map[string]interface{}{
-			"task": newToDo.Task, "description": newToDo.Description,
-		},
-	)
+	td.db.Where(
+		"id = ? AND user_id = ?", toDoId, userId,
+	).Find(&toDo).Save(map[string]interface{}{"task": newToDo.Task, "description": newToDo.Description})
 
-	return newToDo, nil
+	return toDo, nil
 }

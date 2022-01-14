@@ -55,17 +55,13 @@ func (prcon ProjectsController) PostProjectsCtrl() echo.HandlerFunc {
 func (prcon ProjectsController) GetAllProjectsCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		userId := GetAllProjectRequestFormat{}
-
-		if err := c.Bind(&userId); err != nil {
-			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
-		}
 
 		uid := c.Get("user").(*jwt.Token)
 		claims := uid.Claims.(jwt.MapClaims)
 		userID := int(claims["userid"].(float64))
 
 		projects, err := prcon.Repo.GetAll(userID)
+
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}

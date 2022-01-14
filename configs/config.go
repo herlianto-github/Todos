@@ -1,10 +1,9 @@
 package configs
 
 import (
+	"fmt"
+	"os"
 	"sync"
-
-	"github.com/labstack/gommon/log"
-	"github.com/spf13/viper"
 )
 
 type AppConfig struct {
@@ -35,28 +34,41 @@ func GetConfig() *AppConfig {
 
 func initConfig() *AppConfig {
 	var defaultConfig AppConfig
-	defaultConfig.Port = 8000
-	defaultConfig.Database.Driver = "mysql"
-	defaultConfig.Database.Address = "localhost"
+	defaultConfig.Port = 8080
+	defaultConfig.Database.Driver = getEnv("DRIVER", "mysql")
+	defaultConfig.Database.Address = getEnv("ADDRESS", "localhost")
 	defaultConfig.Database.Port = 3306
-	defaultConfig.Database.Username = "todosadmin"
-	defaultConfig.Database.Password = "todos123"
-	defaultConfig.Database.Name = "to_do_lists_test"
+	defaultConfig.Database.Username = getEnv("USERNAME", "todosadmin")
+	defaultConfig.Database.Password = getEnv("PASSWORD", "todos123")
+	defaultConfig.Database.Name = getEnv("NAME", "to_do_lists_test")
 
-	viper.SetConfigType("yaml")
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./configs/")
+	return &defaultConfig
 
-	if err := viper.ReadInConfig(); err != nil {
-		return &defaultConfig
+	// viper.SetConfigType("yaml")
+	// viper.SetConfigName("config")
+	// viper.AddConfigPath("./configs/")
+
+	// if err := viper.ReadInConfig(); err != nil {
+	// 	return &defaultConfig
+	// }
+
+	// var finalConfig AppConfig
+	// err := viper.Unmarshal(&finalConfig)
+	// if err != nil {
+	// 	log.Info("failed to extract config, will use default value")
+	// 	return &defaultConfig
+	// }
+
+	// return &finalConfig
+
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		fmt.Println("intip ENV", value)
+		return value
 	}
 
-	var finalConfig AppConfig
-	err := viper.Unmarshal(&finalConfig)
-	if err != nil {
-		log.Info("failed to extract config, will use default value")
-		return &defaultConfig
-	}
+	return fallback
 
-	return &finalConfig
 }

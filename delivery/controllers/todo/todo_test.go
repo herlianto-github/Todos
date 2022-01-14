@@ -5,10 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -16,10 +12,15 @@ import (
 	"todos/entities"
 	todoRepo "todos/repository/todo"
 	"todos/utils"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTodo(t *testing.T) {
-	jwtToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDIxMTEyNTMsInVzZXJpZCI6MX0.B4Gfcyq2G2eO0q-W5FbX2ecPEDwDxiAbEcBKnzF_NNo"
+	jwtToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDIxMzA0MzgsInVzZXJpZCI6MX0.LEZnOdeQAE5kJlHy1PByOS3NjND34q6WYv38stFruXc"
 	config := configs.GetConfig()
 	db := utils.InitDB(config)
 	db.Migrator().DropTable(&entities.ToDo{})

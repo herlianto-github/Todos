@@ -50,4 +50,3 @@ jobs:
           git pull origin testing
           docker-compose down --rmi all
           docker-compose up --build -d
-          

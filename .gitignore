@@ -1,2 +1,4 @@
 configs/*
 main.go
+Dockerfile
+docker-compose.yaml

@@ -1,6 +1,13 @@
 services:
   app:
     build: .
+    environment:
+      PORT: 8000
+      ADDRESS: "database-ku.cwid5dwr9dfn.ap-southeast-1.rds.amazonaws.com"  
+      DB_PORT: 3306
+      USERNAME: "todosadmin"
+      PASSWORD: "todos123"
+      NAME: "database-ku"
     restart: always
     ports:
-      - 8000:8000
+      - 8080:8000

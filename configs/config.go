@@ -1,74 +1,62 @@
 package configs
 
-import (
-	"fmt"
-	"os"
-	"sync"
-)
+ import (
+ 	"sync"
 
-type AppConfig struct {
-	Port     int `yaml:"port"`
-	Database struct {
-		Driver   string `yaml:"driver"`
-		Name     string `yaml:"name"`
-		Address  string `yaml:"address"`
-		Port     int    `yaml:"port"`
-		Username string `yaml:"username"`
-		Password string `yaml:"password"`
-	}
-}
+ 	"github.com/labstack/gommon/log"
+ 	"github.com/spf13/viper"
+ )
 
-var lock = &sync.Mutex{}
-var appConfig *AppConfig
+ type AppConfig struct {
+ 	Port     int `yaml:"port"`
+ 	Database struct {
+ 		Driver   string `yaml:"driver"`
+ 		Name     string `yaml:"name"`
+ 		Address  string `yaml:"address"`
+ 		Port     int    `yaml:"port"`
+ 		Username string `yaml:"username"`
+ 		Password string `yaml:"password"`
+ 	}
+ }
 
-func GetConfig() *AppConfig {
-	lock.Lock()
-	defer lock.Unlock()
+ var lock = &sync.Mutex{}
+ var appConfig *AppConfig
 
-	if appConfig == nil {
-		appConfig = initConfig()
-	}
+ func GetConfig() *AppConfig {
+ 	lock.Lock()
+ 	defer lock.Unlock()
 
-	return appConfig
-}
+ 	if appConfig == nil {
+ 		appConfig = initConfig()
+ 	}
 
-func initConfig() *AppConfig {
-	var defaultConfig AppConfig
-	defaultConfig.Port = 8080
-	defaultConfig.Database.Driver = getEnv("DRIVER", "mysql")
-	defaultConfig.Database.Address = getEnv("ADDRESS", "localhost")
-	defaultConfig.Database.Port = 3306
-	defaultConfig.Database.Username = getEnv("USERNAME", "todosadmin")
-	defaultConfig.Database.Password = getEnv("PASSWORD", "todos123")
-	defaultConfig.Database.Name = getEnv("NAME", "to_do_lists_test")
+ 	return appConfig
+ }
 
-	return &defaultConfig
+ func initConfig() *AppConfig {
+ 	var defaultConfig AppConfig
+ 	defaultConfig.Port = 8000
+ 	defaultConfig.Database.Driver = "mysql"
+ 	defaultConfig.Database.Address = "localhost"
+ 	defaultConfig.Database.Port = 3306
+ 	defaultConfig.Database.Username = "todosadmin"
+ 	defaultConfig.Database.Password = "todos123"
+ 	defaultConfig.Database.Name = "to_do_lists_test"
 
-	// viper.SetConfigType("yaml")
-	// viper.SetConfigName("config")
-	// viper.AddConfigPath("./configs/")
+ 	viper.SetConfigType("yaml")
+ 	viper.SetConfigName("config")
+ 	viper.AddConfigPath("./configs/")
 
-	// if err := viper.ReadInConfig(); err != nil {
-	// 	return &defaultConfig
-	// }
+ 	if err := viper.ReadInConfig(); err != nil {
+ 		return &defaultConfig
+ 	}
 
-	// var finalConfig AppConfig
-	// err := viper.Unmarshal(&finalConfig)
-	// if err != nil {
-	// 	log.Info("failed to extract config, will use default value")
-	// 	return &defaultConfig
-	// }
+ 	var finalConfig AppConfig
+ 	err := viper.Unmarshal(&finalConfig)
+ 	if err != nil {
+ 		log.Info("failed to extract config, will use default value")
+ 		return &defaultConfig
+ 	}
 
-	// return &finalConfig
-
-}
-
-func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		fmt.Println("intip ENV", value)
-		return value
-	}
-
-	return fallback
-
-}
+ 	return &finalConfig
+ }

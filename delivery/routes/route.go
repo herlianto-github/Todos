@@ -46,10 +46,10 @@ func RegisterPath(
 	// ---------------------------------------------------------------------
 	// CRUD Projects
 	// ---------------------------------------------------------------------
-	e.POST("/project", pctrl.PostProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
-	e.GET("/project/all", pctrl.GetAllProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
-	e.GET("/project", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
-	e.PUT("/project", pctrl.PutProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
-	e.DELETE("/project", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.POST("/projects", pctrl.PostProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/projects/all", pctrl.GetAllProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.GET("/projects", pctrl.GetProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.PUT("/projects/:id", pctrl.PutProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
+	e.DELETE("/projects/:id", pctrl.DeleteProjectsCtrl(), middleware.JWT([]byte("RAHASIA")))
 
 }

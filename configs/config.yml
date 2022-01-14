@@ -1,0 +1,8 @@
+port: 8080
+database:
+  driver: "mysql" 
+  address: "127.0.0.1"
+  port: 3306  
+  username: "todosadmin"
+  password: "todos123"
+  name: "to_do_lists"

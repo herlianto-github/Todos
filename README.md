@@ -1,3 +1,5 @@
+[![Testing](https://github.com/herlianto-github/Todos/actions/workflows/aws.yml/badge.svg?branch=testing)](https://github.com/herlianto-github/Todos/actions/workflows/aws.yml)
+
 # Todos
 Week 5 - Project Todo List
 

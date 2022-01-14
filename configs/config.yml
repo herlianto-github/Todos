@@ -1,7 +1,7 @@
 port: 8000
 database:
   driver: "mysql" 
-  address: "database-ku.cwid5dwr9dfn.ap-southeast-1.rds.amazonaws.com"
+  address: "127.0.0.1"
   port: 3306  
   username: "todosadmin"
   password: "todos123"

@@ -8,7 +8,7 @@ type CreateToDoResponseFormat struct {
 }
 
 type GetToDoResponseFormat struct {
-	Message string          `json:"message"`
+	Message interface{}     `json:"message"`
 	Data    []entities.ToDo `json:"data"`
 }
 type GetAllToDoResponseFormat struct {

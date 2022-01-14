@@ -73,31 +73,29 @@ func (tdcon ToDoController) GetAllTodoCtrl() echo.HandlerFunc {
 func (tdcon ToDoController) GetTodoCtrl() echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		id, err := strconv.Atoi(c.Param("id"))
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
-		}
+		id, _ := strconv.Atoi(c.Param("id"))
 
 		uid := c.Get("user").(*jwt.Token)
 		claims := uid.Claims.(jwt.MapClaims)
 		userID := int(claims["userid"].(float64))
-		todos, err := tdcon.Repo.Get(id, userID)
 
-		if todos.ID != 0 && err != nil {
+		todos, _ := tdcon.Repo.Get(id, userID)
+
+		if len(todos) == 0 {
 			return c.JSON(
-				http.StatusOK, map[string]interface{}{
-					"message": "succes",
-					"data":    todos,
+				http.StatusNotFound, map[string]interface{}{
+					"message": "Task not found",
 				},
 			)
 		}
 
 		return c.JSON(
-			http.StatusNotFound, map[string]interface{}{
-				"message": common.NewNotFoundResponse(),
+			http.StatusOK, map[string]interface{}{
+				"message": "succes",
 				"data":    todos,
 			},
 		)
+
 	}
 
 }
@@ -130,17 +128,18 @@ func (tdcon ToDoController) PutTodoCtrl() echo.HandlerFunc {
 		uid := c.Get("user").(*jwt.Token)
 		claims := uid.Claims.(jwt.MapClaims)
 		userID := int(claims["userid"].(float64))
-		if err := c.Bind(&PutTodoReq); err != nil {
+		err := c.Bind(&PutTodoReq)
+
+		newTodo := entities.ToDo{
+			ID:          PutTodoReq.ToDoID,
+			Task:        PutTodoReq.Task,
+			Description: PutTodoReq.Description,
+		}
+		if PutTodoReq.ToDoID < 1 || err != nil {
 			return c.JSON(http.StatusBadRequest, common.NewBadRequestResponse())
 		}
 
-		newTodo := entities.ToDo{
-			Task: PutTodoReq.Task,
-
-			Description: PutTodoReq.Description,
-		}
-
-		_, err := tdcon.Repo.Update(newTodo, PutTodoReq.ToDoID, userID)
+		_, err = tdcon.Repo.Update(newTodo, PutTodoReq.ToDoID, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.NewInternalServerErrorResponse())
 		}

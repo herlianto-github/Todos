@@ -10,8 +10,12 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func RegisterPath(e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController, tdctrl *todo.ToDoController) {
+func RegisterPath(
+	e *echo.Echo, authctrl *auth.AuthController, uctrl *user.UsersController, pctrl *project.ProjectsController,
+	tdctrl *todo.ToDoController,
+) {
 
+	e.Use(middleware.RemoveTrailingSlash())
 	// ---------------------------------------------------------------------
 	// Login & Register
 	// ---------------------------------------------------------------------

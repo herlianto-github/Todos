@@ -2,7 +2,9 @@ port: 8080
 database:
   driver: "mysql" 
   address: "127.0.0.1"
-  port: 3306  
-  username: "todosadmin"
-  password: "todos123"
+  port: 3306
+  #untuk docker #username = "root"
+  username: "admin"
+  password: "admin123"
   name: "to_do_lists"
+
